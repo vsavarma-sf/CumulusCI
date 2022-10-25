@@ -1,6 +1,30 @@
 cumulusci:
     keychain: cumulusci.core.keychain.EncryptedFileProjectKeychain
 tasks:
+    set_username:
+        description: Set Username to ENV
+        class_path: cumulusci.tasks.command.Command
+        options:
+            command: export USERNAME=rcg-user1@gs0.org
+    trigger_api:
+        description: Run a public REST API
+        class_path: cumulusci.tasks.push.trigger_api.TriggerApiTask
+        options:
+            api_host: https://api.runscope.com
+            path: /radar/258eb736-c08d-4750-8258-3f1a210860d3/trigger?runscope_environment=4ec604f0-b515-458e-8caa-467250ce1cc3
+            method: POST
+    fetch_username:
+        description: Run a public REST API
+        class_path: cumulusci.tasks.push.fetch_username.FetchUsernameTask
+        options:
+            api_host: https://api.runscope.com
+            path: /buckets/2xxwwhsurr06/tests/6d48663f-2d42-4acd-9c0d-8b3897de490e/results/8347d511-dc7f-47c1-b98f-f34efd954ad2
+            method: GET
+            headers:
+                [
+                    "Authorization:Bearer c9f3d4ee-e60d-40d8-828e-2832dfdd833f",
+                    "Content-Type:application/json",
+                ]
     activate_flow:
         group: Metadata Transformations
         description: Activates Flows identified by a given list of Developer Names
